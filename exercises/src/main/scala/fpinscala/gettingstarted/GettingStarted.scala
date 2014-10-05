@@ -15,8 +15,10 @@ object MyModule {
 
   def main(args: Array[String]): Unit = {
     println(formatAbs(-42))
-    for (i <- 0 to 10)
-      println(s"fib($i) = ${fib(i)}")
+    for (i <- 0 to 10) {
+      println(s" fib($i) = ${fib(i)}")
+      println(s"fib2($i) = ${fib2(i)}")
+    }
   }
 
   // A definition of factorial, using a local, tail recursive function
@@ -39,6 +41,7 @@ object MyModule {
 
   // Exercise 1: Write a function to compute the nth fibonacci number
 
+  // tail recursive
   def fib(n: Int): Int = {
     @annotation.tailrec
     def go(n: Int, a: Int, b: Int): Int =
@@ -46,6 +49,18 @@ object MyModule {
       else go(n-1, b, a+b)
 
     go(n, 0, 1)
+  }
+
+  // iterative
+  def fib2(n: Int): Int = {
+    var (a, b, i) = (0, 1, n)
+    while (i > 0) {
+      val tmp = a
+      a = b
+      b = tmp+b
+      i -= 1
+    }
+    a
   }
 
   // This definition and `formatAbs` are very similar..
