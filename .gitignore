@@ -8,3 +8,4 @@ project.vim
 *.old
 .idea
 *.class
+.tags
