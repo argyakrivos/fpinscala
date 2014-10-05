@@ -132,7 +132,13 @@ object MonomorphicBinarySearch {
 
 }
 
-object PolymorphicFunctions {
+object PolymorphicFunctions extends App {
+
+  val sortedArray = Array(1, 4, 7, 8, 9, 10, 11, 48, 290)
+  val unsortedArray = Array(34, 54, 56, 12, 4, 78)
+
+  println(s"${sortedArray.mkString(", ")} => ${isSorted[Int](sortedArray, _ > _)}")
+  println(s"${unsortedArray.mkString(", ")} => ${isSorted[Int](unsortedArray, _ > _)}")
 
   // Here's a polymorphic version of `binarySearch`, parameterized on
   // a function for testing whether an `A` is greater than another `A`.
@@ -154,7 +160,15 @@ object PolymorphicFunctions {
 
   // Exercise 2: Implement a polymorphic function to check whether
   // an `Array[A]` is sorted
-  def isSorted[A](as: Array[A], gt: (A,A) => Boolean): Boolean = ???
+  def isSorted[A](as: Array[A], gt: (A,A) => Boolean): Boolean = {
+    @annotation.tailrec
+    def go(i: Int): Boolean = {
+      if (i <= 0) true
+      else if (gt(as(i), as(i-1))) go(i-1)
+      else false
+    }
+    go(as.size-1)
+  }
 
   // Polymorphic functions are often so constrained by their type
   // that they only have one implementation! Here's an example:
