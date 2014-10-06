@@ -49,10 +49,13 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   def tail[A](l: List[A]): List[A] = l match {
     case Nil => Nil
-    case Cons(x, xs) => xs
+    case Cons(_, xs) => xs
   }
 
-  def setHead[A](l: List[A], h: A): List[A] = sys.error("todo")
+  def setHead[A](l: List[A], h: A): List[A] = l match {
+    case Nil => Cons(h, Nil)
+    case Cons(_, xs) => Cons(h, xs)
+  }
 
   def drop[A](l: List[A], n: Int): List[A] = sys.error("todo")
 
@@ -83,4 +86,7 @@ object DataStructures extends App {
 
   // Exercise 3.2
   println(s"tail(List(1,2,3)) = ${mkString(tail(List(1,2,3)))}")
+
+  // Exercise 3.3
+  println(s"setHead(List(1,2,3), 4) = ${mkString(setHead(List(1,2,3), 4))}")
 }
