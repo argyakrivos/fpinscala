@@ -57,7 +57,14 @@ object List { // `List` companion object. Contains functions for creating and wo
     case Cons(_, xs) => Cons(h, xs)
   }
 
-  def drop[A](l: List[A], n: Int): List[A] = sys.error("todo")
+  @annotation.tailrec
+  def drop[A](l: List[A], n: Int): List[A] = {
+    if (n <= 0) l
+    else l match {
+      case Nil => Nil
+      case Cons(_, xs) if n > 0 => drop(xs, n-1)
+    }
+  }
 
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] = sys.error("todo")
 
@@ -89,4 +96,11 @@ object DataStructures extends App {
 
   // Exercise 3.3
   println(s"setHead(List(1,2,3), 4) = ${mkString(setHead(List(1,2,3), 4))}")
+
+  // Exercise 3.4
+  println(s"drop(List(1,2,3), 0) = ${mkString(drop(List(1,2,3), 0))}")
+  println(s"drop(List(1,2,3), 1) = ${mkString(drop(List(1,2,3), 1))}")
+  println(s"drop(List(1,2,3), 2) = ${mkString(drop(List(1,2,3), 2))}")
+  println(s"drop(List(1,2,3), 3) = ${mkString(drop(List(1,2,3), 3))}")
+  println(s"drop(List(1,2,3), 4) = ${mkString(drop(List(1,2,3), 4))}")
 }
