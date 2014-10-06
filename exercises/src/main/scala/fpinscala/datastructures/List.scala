@@ -66,7 +66,11 @@ object List { // `List` companion object. Contains functions for creating and wo
     }
   }
 
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = sys.error("todo")
+  @annotation.tailrec
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match {
+    case Cons(x, xs) if f(x) => dropWhile(xs, f)
+    case _ => l
+  }
 
   def init[A](l: List[A]): List[A] = sys.error("todo")
 
@@ -103,4 +107,10 @@ object DataStructures extends App {
   println(s"drop(List(1,2,3), 2) = ${mkString(drop(List(1,2,3), 2))}")
   println(s"drop(List(1,2,3), 3) = ${mkString(drop(List(1,2,3), 3))}")
   println(s"drop(List(1,2,3), 4) = ${mkString(drop(List(1,2,3), 4))}")
+
+  // Exercise 3.5
+  println(s"dropWhile(List(1,2,3), _ > 1) = ${mkString(dropWhile[Int](List(1,2,3), _ > 1))}")
+  println(s"dropWhile(List(1,2,3), _ < 2) = ${mkString(dropWhile[Int](List(1,2,3), _ < 2))}")
+  println(s"dropWhile(List(1,2,3,1,2), _ < 3) = ${mkString(dropWhile[Int](List(1,2,3,1,2), _ < 3))}")
+  println(s"dropWhile(List(1,2,3), _ < 4) = ${mkString(dropWhile[Int](List(1,2,3), _ < 4))}")
 }
