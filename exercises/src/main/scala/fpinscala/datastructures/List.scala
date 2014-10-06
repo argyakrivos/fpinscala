@@ -22,10 +22,10 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   val x = List(1,2,3,4,5) match {
     case Cons(x, Cons(2, Cons(4, _))) => x
-    case Nil => 42 
+    case Nil => 42
     case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
     case Cons(h, t) => h + sum(t)
-    case _ => 101 
+    case _ => 101
   }
 
   def append[A](a1: List[A], a2: List[A]): List[A] =
@@ -62,4 +62,12 @@ object List { // `List` companion object. Contains functions for creating and wo
   def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = sys.error("todo")
 
   def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
+}
+
+object DataStructures extends App {
+  import List._
+
+  // this should match Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
+  // and print 3 (from 1 + 2)
+  println(s"x = $x")
 }
