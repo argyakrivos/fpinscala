@@ -91,7 +91,7 @@ object List { // `List` companion object. Contains functions for creating and wo
     case Cons(x, xs) => Cons(x, init2(xs))
   }
 
-  def length[A](l: List[A]): Int = sys.error("todo")
+  def length[A](l: List[A]): Int = foldRight(l, 0)((_, acc) => acc + 1)
 
   def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = sys.error("todo")
 
@@ -133,4 +133,11 @@ object DataStructures extends App {
 
   // Exercise 3.6
   println(s"init(List(1,2,3)) = ${mkString(init(List(1,2,3)))}")
+
+  // Exercise 3.8
+  // we get back the original list
+  println(s"foldRight(List(1,2,3), Nil:List[Int])(Cons(_,_)) = ${foldRight(List(1,2,3), Nil:List[Int])(Cons(_,_))}")
+
+  // Exercise 3.9
+  println(s"length(List(9,23,34,0)) = ${length(List(9,23,34,0))}")
 }
