@@ -93,7 +93,12 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   def length[A](l: List[A]): Int = foldRight(l, 0)((_, acc) => acc + 1)
 
-  def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = sys.error("todo")
+  @annotation.tailrec
+  def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B =
+    l match {
+      case Nil => z
+      case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
+    }
 
   def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
 
@@ -140,4 +145,7 @@ object DataStructures extends App {
 
   // Exercise 3.9
   println(s"length(List(9,23,34,0)) = ${length(List(9,23,34,0))}")
+
+  // Exercise 3.10
+  println(s"foldLeft(List(1,2,3)(_ + _)) = ${foldLeft(List(1,2,3), 0)(_ + _)}")
 }
