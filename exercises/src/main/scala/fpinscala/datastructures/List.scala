@@ -39,7 +39,10 @@ object List { // `List` companion object. Contains functions for creating and wo
       case Nil => z
       case Cons(x, xs) => f(x, foldRight(xs, z)(f))
     }
-  
+
+  def foldRight2[A,B](as: List[A], z: B)(f: (A, B) => B): B =
+    foldLeft(reverse(as), z)((right, left) => f(left, right))
+
   def sum2(ns: List[Int]) = 
     foldRight(ns, 0)((x,y) => x + y)
   
@@ -105,6 +108,9 @@ object List { // `List` companion object. Contains functions for creating and wo
       case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
     }
 
+  def foldLeft2[A,B](l: List[A], z: B)(f: (B, A) => B): B =
+    foldRight(l, (b: B) => b)((right, left) => b => left(f(b, right)))(z)
+
   def reverse[A](l: List[A]): List[A] =
     foldLeft(l, List[A]())((acc, x) => Cons(x, acc))
 
@@ -155,7 +161,7 @@ object DataStructures extends App {
   println(s"length(List(9,23,34,0)) = ${length(List(9,23,34,0))}")
 
   // Exercise 3.10
-  println(s"foldLeft(List(1,2,3)(_ + _)) = ${foldLeft(List(1,2,3), 0)(_ + _)}")
+  println(s"foldLeft(List(1,2,3), 0)(_ + _) = ${foldLeft(List(1,2,3), 0)(_ + _)}")
 
   // Exercise 3.11
   println(s"sum3(List(1,2,5)) = ${sum3(List(1,2,5))}")
@@ -164,4 +170,10 @@ object DataStructures extends App {
 
   // Exercise 3.12
   println(s"reverse(List(1,2,3)) = ${mkString(reverse(List(1,2,3)))}")
+
+  // Exercise 3.13
+  println(s"foldLeft(List(a,b,c), _)(_ + _) = ${foldLeft(List("a","b","c"), "")((acc, x) => acc + x)}")
+  println(s"foldLeft2(List(a,b,c), _)(_ + _) = ${foldLeft2(List("a","b","c"), "")((acc, x) => acc + x)}")
+  println(s"foldRight(List(a,b,c), _)(_ + _) = ${foldRight(List("a","b","c"), "")((x, acc) => acc + x)}")
+  println(s"foldRight2(List(a,b,c), _)(_ + _) = ${foldRight2(List("a","b","c"), "")((x, acc) => acc + x)}")
 }
