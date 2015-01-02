@@ -1,7 +1,5 @@
 package fpinscala.datastructures
 
-import scala.collection.mutable.ListBuffer
-
 sealed trait List[+A] // `List` data type, parameterized on a type, `A`
 case object Nil extends List[Nothing] // A `List` data constructor representing the empty list
 case class Cons[+A](head: A, tail: List[A]) extends List[A] // Another data constructor, representing nonempty lists. Note that `tail` is another `List[A]`, which may be `Nil` or another `Cons`.
@@ -48,6 +46,11 @@ object List { // `List` companion object. Contains functions for creating and wo
   def product2(ns: List[Double]) = 
     foldRight(ns, 1.0)(_ * _) // `_ * _` is more concise notation for `(x,y) => x * y`; see sidebar
 
+  def sum3(ns: List[Int]) =
+    foldLeft(ns, 0)(_ + _)
+
+  def product3(ns: List[Double]) =
+    foldLeft(ns, 1.0)(_ * _)
 
   def tail[A](l: List[A]): List[A] = l match {
     case Nil => Nil
@@ -92,6 +95,8 @@ object List { // `List` companion object. Contains functions for creating and wo
   }
 
   def length[A](l: List[A]): Int = foldRight(l, 0)((_, acc) => acc + 1)
+
+  def length2[A](l: List[A]): Int = foldLeft(l, 0)((acc, _) => acc + 1)
 
   @annotation.tailrec
   def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B =
@@ -148,4 +153,9 @@ object DataStructures extends App {
 
   // Exercise 3.10
   println(s"foldLeft(List(1,2,3)(_ + _)) = ${foldLeft(List(1,2,3), 0)(_ + _)}")
+
+  // Exercise 3.11
+  println(s"sum3(List(1,2,5)) = ${sum3(List(1,2,5))}")
+  println(s"product3(List(1,2,5)) = ${product3(List(1,2,5))}")
+  println(s"length2(List(3,2,1)) = ${length2(List(3,2,1))}")
 }
