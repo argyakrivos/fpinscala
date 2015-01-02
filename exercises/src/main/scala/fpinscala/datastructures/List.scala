@@ -126,7 +126,21 @@ object List { // `List` companion object. Contains functions for creating and wo
   def doubleToString(l: List[Double]): List[String] =
     foldRight(l, List[String]())((x, list) => Cons(x.toString, list))
 
-  def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
+  def map[A,B](l: List[A])(f: A => B): List[B] =
+    foldRight(l, List[B]())((x, list) => Cons(f(x), list))
+
+  def map2[A,B](l: List[A])(f: A => B): List[B] = {
+    val buf = new collection.mutable.ListBuffer[B]
+    @annotation.tailrec
+    def go(l: List[A]): Unit = l match {
+      case Nil => ()
+      case Cons(h, t) =>
+        buf += f(h)
+        go(t)
+    }
+    go(l)
+    List(buf.toList: _*)
+  }
 
   def mkString[A](l: List[A]): String = l match {
     case Nil => ""
@@ -200,4 +214,8 @@ object DataStructures extends App {
 
   // Exercise 3.17
   println(s"doubleToString(List(1.0, 2.0, 3.0)) = ${mkString(doubleToString(List(1.0, 2.0, 3.0)))}")
+
+  // Exercise 3.18
+  println(s"map(List(1,2,3))(_ * 2) = ${mkString(map(List(1,2,3))(_ * 2))}")
+  println(s"map2(List(1,2,3))(_ * 2) = ${mkString(map2(List(1,2,3))(_ * 2))}")
 }
