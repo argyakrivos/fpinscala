@@ -123,6 +123,9 @@ object List { // `List` companion object. Contains functions for creating and wo
   def add1(l: List[Int]): List[Int] =
     foldRight(l, List[Int]())((x, list) => Cons(x+1, list))
 
+  def doubleToString(l: List[Double]): List[String] =
+    foldRight(l, List[String]())((x, list) => Cons(x.toString, list))
+
   def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
 
   def mkString[A](l: List[A]): String = l match {
@@ -194,4 +197,7 @@ object DataStructures extends App {
 
   // Exercise 3.16
   println(s"add1(List(1,2,3)) = ${mkString(add1(List(1,2,3)))}")
+
+  // Exercise 3.17
+  println(s"doubleToString(List(1.0, 2.0, 3.0)) = ${mkString(doubleToString(List(1.0, 2.0, 3.0)))}")
 }
