@@ -34,6 +34,9 @@ object List { // `List` companion object. Contains functions for creating and wo
       case Cons(h,t) => Cons(h, append(t, a2))
     }
 
+  def append2[A](a1: List[A], a2: List[A]): List[A] =
+    foldRight(a1, a2)((x, acc) => Cons(x, acc))
+
   def foldRight[A,B](as: List[A], z: B)(f: (A, B) => B): B = // Utility functions
     as match {
       case Nil => z
@@ -176,4 +179,7 @@ object DataStructures extends App {
   println(s"foldLeft2(List(a,b,c), _)(_ + _) = ${foldLeft2(List("a","b","c"), "")((acc, x) => acc + x)}")
   println(s"foldRight(List(a,b,c), _)(_ + _) = ${foldRight(List("a","b","c"), "")((x, acc) => acc + x)}")
   println(s"foldRight2(List(a,b,c), _)(_ + _) = ${foldRight2(List("a","b","c"), "")((x, acc) => acc + x)}")
+
+  // Exercise 3.14
+  println(s"append2(List(1,2,3),List(4,5,6)) = ${mkString(append2(List(1,2,3), List(4,5,6)))}")
 }
