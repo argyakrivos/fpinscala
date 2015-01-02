@@ -105,6 +105,9 @@ object List { // `List` companion object. Contains functions for creating and wo
       case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
     }
 
+  def reverse[A](l: List[A]): List[A] =
+    foldLeft(l, List[A]())((acc, x) => Cons(x, acc))
+
   def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
 
   def mkString[A](l: List[A]): String = l match {
@@ -158,4 +161,7 @@ object DataStructures extends App {
   println(s"sum3(List(1,2,5)) = ${sum3(List(1,2,5))}")
   println(s"product3(List(1,2,5)) = ${product3(List(1,2,5))}")
   println(s"length2(List(3,2,1)) = ${length2(List(3,2,1))}")
+
+  // Exercise 3.12
+  println(s"reverse(List(1,2,3)) = ${mkString(reverse(List(1,2,3)))}")
 }
