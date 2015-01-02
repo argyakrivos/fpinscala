@@ -120,6 +120,9 @@ object List { // `List` companion object. Contains functions for creating and wo
   def concat[A](l: List[List[A]]): List[A] =
     foldRight(l, List[A]())(append)
 
+  def add1(l: List[Int]): List[Int] =
+    foldRight(l, List[Int]())((x, list) => Cons(x+1, list))
+
   def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
 
   def mkString[A](l: List[A]): String = l match {
@@ -188,4 +191,7 @@ object DataStructures extends App {
 
   // Exercise 3.15
   println(s"concat(List(List(1,2,3),List(4,5,6),List(7,8,9))) = ${mkString(concat(List(List(1,2,3), List(4,5,6), List(7,8,9))))}")
+
+  // Exercise 3.16
+  println(s"add1(List(1,2,3)) = ${mkString(add1(List(1,2,3)))}")
 }
