@@ -117,6 +117,9 @@ object List { // `List` companion object. Contains functions for creating and wo
   def reverse[A](l: List[A]): List[A] =
     foldLeft(l, List[A]())((acc, x) => Cons(x, acc))
 
+  def concat[A](l: List[List[A]]): List[A] =
+    foldRight(l, List[A]())(append)
+
   def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
 
   def mkString[A](l: List[A]): String = l match {
@@ -182,4 +185,7 @@ object DataStructures extends App {
 
   // Exercise 3.14
   println(s"append2(List(1,2,3),List(4,5,6)) = ${mkString(append2(List(1,2,3), List(4,5,6)))}")
+
+  // Exercise 3.15
+  println(s"concat(List(List(1,2,3),List(4,5,6),List(7,8,9))) = ${mkString(concat(List(List(1,2,3), List(4,5,6), List(7,8,9))))}")
 }
